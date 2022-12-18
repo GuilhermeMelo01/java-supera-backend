@@ -29,15 +29,20 @@ public class TransferenciaController {
         return ResponseEntity.ok().body(transferencias);
     }
 
-    @GetMapping(value = "data/{idConta}")
-    public ResponseEntity<List<Transferencia>> buscarTransferencias(@PathVariable Integer idConta,
-                                                                    @RequestParam
+    @GetMapping(value = "/data")
+    public ResponseEntity<List<Transferencia>> buscarTransferencias(@RequestParam
                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                                     LocalDate dataInicial,
                                                                     @RequestParam
                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                                     LocalDate dataFinal) {
-        List<Transferencia> transferencias = service.buscarTransferenciasPorData(idConta, dataInicial, dataFinal);
+        List<Transferencia> transferencias = service.buscarTransferenciasPorData(dataInicial, dataFinal);
+        return ResponseEntity.ok().body(transferencias);
+    }
+
+    @GetMapping(value = "/nomeOperador")
+    public ResponseEntity<List<Transferencia>> buscarTransferencias(@RequestParam("nome") String nome) {
+        List<Transferencia> transferencias = service.buscarTransferenciasPorNomeOperador(nome);
         return ResponseEntity.ok().body(transferencias);
     }
 }

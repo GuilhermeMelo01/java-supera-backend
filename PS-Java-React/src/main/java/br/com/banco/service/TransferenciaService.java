@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,10 +27,9 @@ public class TransferenciaService {
         return conta.getTransferencias();
     }
 
-    public List<Transferencia> buscarTransferenciasPorData(Integer id, LocalDate dataInicial, LocalDate dataFinal) {
-        Conta conta = contaRepository.findById(id).orElseThrow();
-        List<Transferencia> transferencias = conta.getTransferencias();
-        int count = transferencias.size()-1;
+    public List<Transferencia> buscarTransferenciasPorData(LocalDate dataInicial, LocalDate dataFinal) {
+        List<Transferencia> transferencias = transferenciaRepository.findAll();
+        int count = transferencias.size() - 1;
         while (count >= 0) {
             if (transferencias.get(count).getData_transferencia().isBefore(dataInicial) ||
                     transferencias.get(count).getData_transferencia().isAfter(dataFinal)) {
@@ -38,5 +38,17 @@ public class TransferenciaService {
             count--;
         }
         return transferencias;
+    }
+
+    public List<Transferencia> buscarTransferenciasPorNomeOperador(String nome) {
+        List<Transferencia> retornoTrans = new ArrayList<>();
+        List<Transferencia> transferencias = transferenciaRepository.findAll();
+        for (int i = 0; i < transferencias.size(); i++) {
+            if (transferencias.get(i).getNome_operador_transacao() != null &&
+                    transferencias.get(i).getNome_operador_transacao().equals(nome)) {
+                retornoTrans.add(transferencias.get(i));
+            }
+        }
+        return retornoTrans;
     }
 }
