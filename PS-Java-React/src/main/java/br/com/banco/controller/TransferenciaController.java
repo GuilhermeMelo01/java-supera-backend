@@ -45,4 +45,17 @@ public class TransferenciaController {
         List<Transferencia> transferencias = service.buscarTransferenciasPorNomeOperador(nome);
         return ResponseEntity.ok().body(transferencias);
     }
+
+    @GetMapping(value = "/todos")
+    public ResponseEntity<List<Transferencia>> buscarTransferencias(@RequestParam("nome") String nome,
+                                                                    @RequestParam
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                    LocalDate dataInicial,
+                                                                    @RequestParam
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                                                                    LocalDate dataFinal) {
+        List<Transferencia> transferencias = service.buscarTransferenciasPorTodosFiltros(dataInicial, dataFinal, nome);
+        return ResponseEntity.ok().body(transferencias);
+    }
+
 }

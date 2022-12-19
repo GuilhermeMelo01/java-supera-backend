@@ -28,27 +28,40 @@ public class TransferenciaService {
     }
 
     public List<Transferencia> buscarTransferenciasPorData(LocalDate dataInicial, LocalDate dataFinal) {
-        List<Transferencia> transferencias = transferenciaRepository.findAll();
-        int count = transferencias.size() - 1;
-        while (count >= 0) {
-            if (transferencias.get(count).getData_transferencia().isBefore(dataInicial) ||
-                    transferencias.get(count).getData_transferencia().isAfter(dataFinal)) {
-                transferencias.remove(count);
-            }
-            count--;
-        }
-        return transferencias;
+        return buscaPorDatas(dataInicial, dataFinal);
     }
 
     public List<Transferencia> buscarTransferenciasPorNomeOperador(String nome) {
-        List<Transferencia> retornoTrans = new ArrayList<>();
+        List<Transferencia> retornoTransferencias = new ArrayList<>();
         List<Transferencia> transferencias = transferenciaRepository.findAll();
-        for (int i = 0; i < transferencias.size(); i++) {
-            if (transferencias.get(i).getNome_operador_transacao() != null &&
-                    transferencias.get(i).getNome_operador_transacao().equals(nome)) {
-                retornoTrans.add(transferencias.get(i));
+        for (Transferencia transferencia : transferencias) {
+            if (transferencia.getNome_operador_transacao() != null &&
+                    transferencia.getNome_operador_transacao().equals(nome)) {
+                retornoTransferencias.add(transferencia);
             }
         }
-        return retornoTrans;
+        return retornoTransferencias;
+    }
+    public List<Transferencia> buscarTransferenciasPorTodosFiltros(LocalDate dataInicial, LocalDate dataFinal,
+                                                                   String nomeOperador){
+        List<Transferencia> transferencias = buscarTransferenciasPorNomeOperador(nomeOperador);
+        return buscarTransferenciaData(transferencias, dataInicial, dataFinal);
+    }
+
+    private List<Transferencia> buscaPorDatas(LocalDate dataInicial, LocalDate dataFinal) {
+        List<Transferencia> transferencias = transferenciaRepository.findAll();
+        return buscarTransferenciaData(transferencias, dataInicial, dataFinal);
+    }
+
+    private List<Transferencia> buscarTransferenciaData(List<Transferencia> transferencias,
+                                       LocalDate dataInicial, LocalDate dataFinal){
+        List<Transferencia> retornoTransferencia = new ArrayList<>();
+        for (Transferencia transferencia : transferencias) {
+            if (transferencia.getData_transferencia().isAfter(dataInicial) &&
+                    transferencia.getData_transferencia().isBefore(dataFinal)) {
+                retornoTransferencia.add(transferencia);
+            }
+        }
+        return retornoTransferencia;
     }
 }
