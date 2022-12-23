@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/transferencias")
 @RestController
+@CrossOrigin(origins = "*")
 public class TransferenciaController {
 
     private final TransferenciaService service;
