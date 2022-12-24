@@ -3,6 +3,7 @@ package br.com.banco.service;
 import br.com.banco.model.Transferencia;
 import br.com.banco.repository.ContaRepository;
 import br.com.banco.repository.TransferenciaRepository;
+import br.com.banco.util.transferencia.TransferenciaContaCriarTeste;
 import br.com.banco.util.transferencia.TransferenciaCriarTeste;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,6 @@ class TransferenciaServiceTest {
 
     @Mock
     private TransferenciaRepository transferenciaRepositoryMock;
-    private ContaRepository contaRepositoryMock;
     @BeforeEach
     void setUp() {
         List<Transferencia> listaTransferencia = List.of(TransferenciaCriarTeste.transferenciasCriada());
@@ -45,4 +45,6 @@ class TransferenciaServiceTest {
 
         Assertions.assertThat(listaTransferencias.get(0).getNome_operador_transacao()).isEqualTo(nomeEsperado);
     }
+
+
 }

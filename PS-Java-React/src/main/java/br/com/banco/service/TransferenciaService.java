@@ -27,7 +27,7 @@ public class TransferenciaService {
         return conta.getTransferencias();
     }
 
-    public List<Transferencia> buscarTransferenciasPorData(LocalDate dataInicial, LocalDate dataFinal) {
+    public List<Transferencia> buscarTodasTransferenciasPorData(LocalDate dataInicial, LocalDate dataFinal) {
         return buscaPorDatas(dataInicial, dataFinal);
     }
 

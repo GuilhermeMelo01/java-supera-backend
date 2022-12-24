@@ -37,7 +37,7 @@ public class TransferenciaController {
                                                                     @RequestParam
                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                                     LocalDate dataFinal) {
-        List<Transferencia> transferencias = service.buscarTransferenciasPorData(dataInicial, dataFinal);
+        List<Transferencia> transferencias = service.buscarTodasTransferenciasPorData(dataInicial, dataFinal);
         return ResponseEntity.ok().body(transferencias);
     }
 

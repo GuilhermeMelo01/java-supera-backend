@@ -23,6 +23,11 @@ public class Conta implements Serializable {
     @OneToMany(mappedBy = "conta")
     private List<Transferencia> transferencias = new ArrayList<>();
 
+    public Conta(Integer id_conta, String nome_responsavel) {
+        this.id_conta = id_conta;
+        this.nome_responsavel = nome_responsavel;
+    }
+
     public Integer getId_conta() {
         return id_conta;
     }
