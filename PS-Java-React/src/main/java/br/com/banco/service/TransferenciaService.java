@@ -31,7 +31,7 @@ public class TransferenciaService {
         return buscaPorDatas(dataInicial, dataFinal);
     }
 
-    public List<Transferencia> buscarTransferenciasPorNomeOperador(String nome) {
+    public List<Transferencia> buscarTodasTransferenciasPorNomeOperador(String nome) {
         List<Transferencia> retornoTransferencias = new ArrayList<>();
         List<Transferencia> transferencias = transferenciaRepository.findAll();
         for (Transferencia transferencia : transferencias) {
@@ -42,9 +42,9 @@ public class TransferenciaService {
         }
         return retornoTransferencias;
     }
-    public List<Transferencia> buscarTransferenciasPorTodosFiltros(LocalDate dataInicial, LocalDate dataFinal,
-                                                                   String nomeOperador){
-        List<Transferencia> transferencias = buscarTransferenciasPorNomeOperador(nomeOperador);
+    public List<Transferencia> buscarTodasTransferenciasComTodosFiltros(LocalDate dataInicial, LocalDate dataFinal,
+                                                                        String nomeOperador){
+        List<Transferencia> transferencias = buscarTodasTransferenciasPorNomeOperador(nomeOperador);
         return buscarTransferenciaData(transferencias, dataInicial, dataFinal);
     }
 

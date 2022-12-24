@@ -38,6 +38,15 @@ class TransferenciaControllerTest {
         BDDMockito.when(transferenciaServiceMock.buscarTodasTransferenciasPorData(
                 ArgumentMatchers.any(), ArgumentMatchers.any()))
                 .thenReturn(transferencias);
+
+        BDDMockito.when(transferenciaServiceMock.buscarTodasTransferenciasPorNomeOperador(
+                        ArgumentMatchers.anyString()))
+                .thenReturn(transferencias);
+
+        BDDMockito.when(transferenciaServiceMock.buscarTodasTransferenciasComTodosFiltros(ArgumentMatchers.any(),
+                ArgumentMatchers.any(), ArgumentMatchers.anyString()))
+                .thenReturn(transferencias);
+
     }
 
     @Test
@@ -90,5 +99,40 @@ class TransferenciaControllerTest {
                 .hasSize(1);
 
         Assertions.assertThat(transferencias.get(0).getData_transferencia()).isEqualTo(dataTransferenciaEsperada);
+    }
+
+    @Test
+    @DisplayName("Retorna sucesso quando for retornado uma lista de transferencias a partir do nome do operador")
+    void list_RetornaListaDeTransferenciasAtravesDoNomeDoOperador_Sucesso(){
+        String nomeOperadorTransacaoEsperado = TransferenciaContaCriarTeste
+                .criarTransferenciaConta().getNome_operador_transacao();
+
+        List<Transferencia> transferencias = transferenciaController.buscarTransferencias("").getBody();
+
+        Assertions.assertThat(transferencias).isNotNull();
+
+        Assertions.assertThat(transferencias)
+                .isNotEmpty()
+                .hasSize(1);
+
+        Assertions.assertThat(transferencias.get(0).getNome_operador_transacao()).isEqualTo(nomeOperadorTransacaoEsperado);
+    }
+
+    @Test
+    @DisplayName("Retorna sucesso quando for retornado uma lista de transferencias a partir do nome do operador e as datas")
+    void list_RetornaListaDeTransferenciasAtravesDoNomeDoOperadorEDatas_Sucesso(){
+        String tipoEsperado = TransferenciaContaCriarTeste
+                .criarTransferenciaConta().getTipo();
+
+        List<Transferencia> transferencias = transferenciaController.buscarTransferencias("",
+                LocalDate.now(), LocalDate.now()).getBody();
+
+        Assertions.assertThat(transferencias).isNotNull();
+
+        Assertions.assertThat(transferencias)
+                .isNotEmpty()
+                .hasSize(1);
+
+        Assertions.assertThat(transferencias.get(0).getTipo()).isEqualTo(tipoEsperado);
     }
 }
